@@ -20,7 +20,7 @@ class JDSpider(CrawlSpider):
             bookName = each.xpath('div[@class="p-detail"]/a/text()').extract()
             author = each.xpath('div[@class="p-detail"]/dl[1]/dd/a[1]/text()').extract()
             press = each.xpath('div[@class="p-detail"]/dl[2]/dd/a/text()').extract()
-            image_urls =  each.xpath('//div[@class="p-img"]/@src').extract()
+            image_urls = each.xpath('div[@class="p-img"]/a/img/@data-lazy-img').extract()
             temphref = each.xpath('div[@class="p-detail"]/a/@href').extract()
             temphref = str(temphref)
             BookID = str(re.search('com/(.*?)\.html', temphref).group(1))
@@ -43,6 +43,7 @@ class JDSpider(CrawlSpider):
             yield item
 
         nextLink = selector.xpath('/html/body/div[8]/div[2]/div[4]/div/div/span/a[7]/@href').extract()
+        print(nextLink[0])
         if nextLink:
             nextLink = "http:" + nextLink[0]
             print(nextLink)
